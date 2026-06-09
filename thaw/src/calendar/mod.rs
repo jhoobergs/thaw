@@ -201,7 +201,7 @@ fn CalendarItem(
     }
 }
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone, PartialEq, Eq, Hash)]
 pub(crate) enum CalendarItemDate {
     Previous(NaiveDate),
     Current(NaiveDate),

@@ -2,7 +2,6 @@ use super::PanelVariant;
 use crate::{Button, ButtonAppearance, ButtonSize, CalendarItemDate, LocaleConfig};
 use chrono::{Datelike, Days, Months, NaiveDate};
 use leptos::{html, prelude::*};
-use std::ops::Deref;
 use thaw_components::FollowerInjection;
 use thaw_utils::{now_date, ArcOneCallback};
 
@@ -162,23 +161,23 @@ pub fn DatePanel(
                     }}
                 </div>
                 <div class="thaw-date-picker-date-panel__dates">
-                    {move || {
-                        dates
-                            .get()
-                            .into_iter()
-                            .map(|date| {
+                    <For
+                        each=move || dates.get()
+                        key=|date| date.clone()
+                        children={
+                            let close_panel = close_panel.clone();
+                            move |date| {
                                 let on_click = {
                                     let date = date.clone();
                                     let close_panel = close_panel.clone();
                                     move |_| {
-                                        close_panel(Some(*date.deref()));
+                                        close_panel(Some(*date));
                                     }
                                 };
                                 view! { <DatePanelItem value date=date on:click=on_click /> }
-                            })
-                            .collect_view()
-                    }}
-
+                            }
+                        }
+                    />
                 </div>
             </div>
             <div class="thaw-date-picker-date-panel__footer">
@@ -194,7 +193,7 @@ pub fn DatePanel(
 fn DatePanelItem(value: RwSignal<Option<NaiveDate>>, date: CalendarItemDate) -> impl IntoView {
     let is_selected = Memo::new({
         let date = date.clone();
-        move |_| value.with(|value_date| value_date.as_ref() == Some(date.deref()))
+        move |_| value.with(|value_date| value_date.as_ref() == Some(&*date))
     });
 
     view! {
