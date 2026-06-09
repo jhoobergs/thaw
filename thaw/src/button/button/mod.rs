@@ -8,7 +8,9 @@ use leptos::{
     ev, html,
     prelude::*,
 };
-use thaw_utils::{class_list, mount_style, BoxOneCallback, ComponentRef};
+use thaw_utils::{class_list, BoxOneCallback, ComponentRef};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 /// A button triggers an action or event when activated.
 #[component]
@@ -45,6 +47,7 @@ pub fn Button(
     #[prop(optional)] children: Option<Children>,
     #[prop(optional)] comp_ref: ComponentRef<ButtonRef>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("button", include_str!("./button.css"));
 
     let none_children = children.is_none();

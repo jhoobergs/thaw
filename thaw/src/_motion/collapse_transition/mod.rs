@@ -1,5 +1,6 @@
 use leptos::prelude::*;
 use leptos_transition_group::CSSTransition;
+#[cfg(feature = "runtime-css")]
 use thaw_utils::mount_style;
 use web_sys::HtmlElement;
 
@@ -11,6 +12,7 @@ pub fn CollapseTransition<T>(
 where
     T: AddAnyAttr + IntoView + Send + 'static,
 {
+    #[cfg(feature = "runtime-css")]
     mount_style("motion-collapse", include_str!("./index.css"));
 
     let on_enter = |el: HtmlElement| {

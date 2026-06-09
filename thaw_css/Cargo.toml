@@ -1,0 +1,15 @@
+[package]
+name = "thaw_css"
+version = "0.5.0-beta"
+edition = "2021"
+license = "MIT"
+description = "Build-time CSS bundle for Thaw UI components"
+repository = "https://github.com/thaw-ui/thaw"
+keywords = ["thaw", "css", "leptos", "ui"]
+categories = ["web-programming", "gui"]
+
+[build-dependencies]
+walkdir = "2"
+
+[features]
+default = []

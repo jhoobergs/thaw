@@ -1,5 +1,7 @@
 use leptos::{ev, html, leptos_dom::helpers::WindowListenerHandle, prelude::*};
-use thaw_utils::{class_list, mount_style, ComponentRef};
+use thaw_utils::{class_list, ComponentRef};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Scrollbar(
@@ -17,6 +19,7 @@ pub fn Scrollbar(
     #[prop(optional)] comp_ref: Option<ComponentRef<ScrollbarRef>>,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("scrollbar", include_str!("./scrollbar.css"));
     let container_ref = NodeRef::<html::Div>::new();
     let content_ref = NodeRef::<html::Div>::new();

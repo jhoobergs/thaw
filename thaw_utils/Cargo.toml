@@ -23,6 +23,8 @@ chrono = "0.4.38"
 send_wrapper = "0.6"
 
 [features]
+build-css = []
+runtime-css = []
 csr = ["leptos/csr"]
 ssr = ["leptos/ssr", "leptos_meta/ssr"]
 hydrate = ["leptos/hydrate"]

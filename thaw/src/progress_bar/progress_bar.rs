@@ -1,5 +1,7 @@
 use leptos::prelude::*;
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn ProgressBar(
@@ -16,6 +18,7 @@ pub fn ProgressBar(
     #[prop(into, optional)]
     color: Signal<ProgressBarColor>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("progress-bar", include_str!("./progress-bar.css"));
 
     let style = move || {

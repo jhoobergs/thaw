@@ -2,7 +2,9 @@ use crate::ConfigInjection;
 use leptos::{context::Provider, ev, prelude::*};
 use thaw_components::{FocusTrap, Teleport};
 use leptos_transition_group::CSSTransition;
-use thaw_utils::{class_list, mount_style, use_lock_html_scroll, Model};
+use thaw_utils::{class_list, use_lock_html_scroll, Model};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Dialog(
@@ -18,6 +20,7 @@ pub fn Dialog(
     close_on_esc: bool,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("dialog", include_str!("./dialog.css"));
     let config_provider = ConfigInjection::expect_context();
 

@@ -1,7 +1,9 @@
 use crate::Scrollbar;
 use leptos::{context::Provider, prelude::*};
 use thaw_components::OptionComp;
-use thaw_utils::{class_list, mount_style, Model, OptionModel, OptionModelWithValue};
+use thaw_utils::{class_list, Model, OptionModel, OptionModelWithValue};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn NavDrawer(
@@ -22,6 +24,7 @@ pub fn NavDrawer(
     #[prop(optional)] nav_drawer_header: Option<NavDrawerHeader>,
     #[prop(optional)] nav_drawer_footer: Option<NavDrawerFooter>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("nav-drawer", include_str!("./nav-drawer.css"));
 
     view! {

@@ -1,5 +1,7 @@
 use leptos::{prelude::*, tachys::view::any_view::IntoAny};
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Caption1(
@@ -47,6 +49,7 @@ pub fn Text(
     #[prop(optional)] tag: TextTag,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("text", include_str!("./text.css"));
     let class = class_list!["thaw-text", class];
     let style = move || style.get();

@@ -5,7 +5,9 @@ pub use types::*;
 use super::checkbox_group::CheckboxGroupInjection;
 use crate::{Checkmark12FilledIcon, Checkmark16FilledIcon};
 use leptos::{either::Either, html, prelude::*};
-use thaw_utils::{class_list, mount_style, Model};
+use thaw_utils::{class_list, Model};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Checkbox(
@@ -26,6 +28,7 @@ pub fn Checkbox(
     #[prop(optional, into)]
     disabled: Signal<bool>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("checkbox", include_str!("./checkbox.css"));
 
     let id = uuid::Uuid::new_v4().to_string();

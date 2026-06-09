@@ -6,7 +6,9 @@ pub use layout_sider::*;
 
 use crate::Scrollbar;
 use leptos::prelude::*;
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[derive(Default, PartialEq)]
 pub enum LayoutPosition {
@@ -46,6 +48,7 @@ pub fn Layout(
     has_sider: Signal<bool>,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("layout", include_str!("./layout.css"));
 
     let sider_style = Memo::new(move |_| {

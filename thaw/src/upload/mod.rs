@@ -4,7 +4,9 @@ pub use upload_dragger::UploadDragger;
 pub use web_sys::FileList;
 
 use leptos::{ev, html, prelude::*};
-use thaw_utils::{add_event_listener, class_list, mount_style, ArcOneCallback};
+use thaw_utils::{add_event_listener, class_list, ArcOneCallback};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Upload(
@@ -25,6 +27,7 @@ pub fn Upload(
     custom_request: Option<ArcOneCallback<FileList>>,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("upload", include_str!("./upload.css"));
 
     let input_ref = NodeRef::<html::Input>::new();

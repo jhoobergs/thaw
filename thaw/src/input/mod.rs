@@ -8,8 +8,10 @@ use crate::{FieldInjection, Rule};
 use leptos::{ev, html, prelude::*};
 
 use thaw_utils::{
-    class_list, mount_style, ArcOneCallback, BoxOneCallback, ComponentRef, Model, OptionalProp,
+    class_list, ArcOneCallback, BoxOneCallback, ComponentRef, Model, OptionalProp,
 };
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Input(
@@ -65,6 +67,7 @@ pub fn Input(
     size: Signal<InputSize>,
     #[prop(optional, into)] autocomplete: MaybeProp<String>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("input", include_str!("./input.css"));
     let (id, name) = FieldInjection::use_id_and_name(id, name);
     let validate = Rule::validate(rules, value, name);

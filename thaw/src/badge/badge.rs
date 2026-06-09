@@ -1,5 +1,7 @@
 use leptos::{either::Either, prelude::*};
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Badge(
@@ -15,6 +17,7 @@ pub fn Badge(
     color: Signal<BadgeColor>,
     #[prop(optional)] children: Option<Children>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("badge", include_str!("./badge.css"));
 
     view! {

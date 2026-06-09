@@ -5,7 +5,9 @@ mod icons;
 pub(crate) use icons::*;
 
 use leptos::{ev, prelude::*};
-use thaw_utils::{class_list, mount_style, ArcOneCallback};
+use thaw_utils::{class_list, ArcOneCallback};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 /// The Icon component.
 #[component]
@@ -31,6 +33,7 @@ pub fn Icon(
     #[prop(optional, into)]
     on_click: Option<ArcOneCallback<ev::MouseEvent>>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("icon", include_str!("./icon.css"));
 
     let style = match (style, icon.style) {

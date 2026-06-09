@@ -12,7 +12,9 @@ use leptos::{
 };
 use std::time::Duration;
 use thaw_components::{Follower, FollowerArrow};
-use thaw_utils::{class_list, mount_style, on_click_outside, BoxCallback};
+use thaw_utils::{class_list, on_click_outside, BoxCallback};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Popover<T>(
@@ -37,6 +39,7 @@ pub fn Popover<T>(
 where
     T: AddAnyAttr + IntoView + Send + 'static,
 {
+    #[cfg(feature = "runtime-css")]
     mount_style("popover", include_str!("./popover.css"));
 
     let popover_ref = NodeRef::<html::Div>::new();

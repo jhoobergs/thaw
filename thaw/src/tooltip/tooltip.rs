@@ -7,7 +7,9 @@ use leptos::{
 };
 use std::time::Duration;
 use thaw_components::{Follower, FollowerArrow, FollowerPlacement};
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Tooltip<T>(
@@ -26,6 +28,7 @@ pub fn Tooltip<T>(
 where
     T: AddAnyAttr + IntoView + Send + 'static,
 {
+    #[cfg(feature = "runtime-css")]
     mount_style("tooltip", include_str!("./tooltip.css"));
 
     let is_show_content = RwSignal::new(false);

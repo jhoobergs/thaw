@@ -11,8 +11,10 @@ use leptos::{html, prelude::*};
 use panel::{Panel, PanelRef};
 use thaw_components::{Follower, FollowerPlacement};
 use thaw_utils::{
-    class_list, mount_style, now_date, ComponentRef, OptionModel, OptionModelWithValue, SignalWatch,
+    class_list, now_date, ComponentRef, OptionModel, OptionModelWithValue, SignalWatch,
 };
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn DatePicker(
@@ -35,6 +37,7 @@ pub fn DatePicker(
     #[prop(optional, into)]
     size: Signal<DatePickerSize>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("date-picker", include_str!("./date-picker.css"));
     let (id, name) = FieldInjection::use_id_and_name(id, name);
     let validate = Rule::validate(rules, value, name);

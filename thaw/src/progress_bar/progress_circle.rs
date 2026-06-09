@@ -1,5 +1,7 @@
 use leptos::prelude::*;
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn ProgressCircle(
@@ -15,6 +17,7 @@ pub fn ProgressCircle(
     size: Signal<String>,
     #[prop(optional)] children: Option<Children>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("progress-circle", include_str!("./progress-circle.css"));
 
     let stroke_width = 7;

@@ -8,7 +8,9 @@ use leptos::leptos_dom::helpers::WindowListenerHandle;
 use leptos::{ev, html, prelude::*};
 use palette::{Hsv, IntoColor, Srgb};
 use thaw_components::{Follower, FollowerPlacement};
-use thaw_utils::{class_list, mount_style, Model};
+use thaw_utils::{class_list, Model};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn ColorPicker(
@@ -23,6 +25,7 @@ pub fn ColorPicker(
     #[prop(optional, into)]
     disabled: Signal<bool>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("color-picker", include_str!("./color-picker.css"));
     let hue = RwSignal::new(0f32);
     let sv = RwSignal::new((0f32, 0f32));

@@ -5,7 +5,9 @@ pub use types::*;
 use super::info_button::InfoButton;
 use crate::Label;
 use leptos::prelude::*;
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 /// An InfoLabel is a Label with an InfoButton at the end.
 #[component]
@@ -26,6 +28,7 @@ pub fn InfoLabel(
     info_label_info: InfoLabelInfo,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("info-label", include_str!("./info_label.css"));
 
     view! {

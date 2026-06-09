@@ -2,7 +2,9 @@ use super::{SelectRule, SelectSize};
 
 use crate::{icon::ChevronDownRegularIcon, FieldInjection, Rule, SelectRuleTrigger};
 use leptos::{html, prelude::*};
-use thaw_utils::{class_list, mount_style, Model};
+use thaw_utils::{class_list, Model};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Select(
@@ -23,6 +25,7 @@ pub fn Select(
     size: Signal<SelectSize>,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("select", include_str!("./select.css"));
     let (id, name) = FieldInjection::use_id_and_name(id, name);
     let validate = Rule::validate(rules, value, name);

@@ -129,3 +129,14 @@ pub use upload::*;
 pub mod ssr {
     pub use thaw_utils::SSRMountStyleProvider;
 }
+
+/// Build-time generated CSS bundle.
+///
+/// This module is only available when the `build-css` feature is enabled (default).
+/// It re-exports the CSS constants from the `thaw_css` crate.
+///
+/// For use in build scripts (build-dependencies), use `thaw_css` directly instead.
+#[cfg(feature = "build-css")]
+pub mod css {
+    pub use thaw_css::{THAW_CSS, THAW_CSS_LEN};
+}

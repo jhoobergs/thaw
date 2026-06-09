@@ -5,7 +5,9 @@ pub use types::*;
 use crate::{TreeItemInjection, _motion::CollapseTransition};
 use leptos::{context::Provider, either::Either, prelude::*};
 use std::collections::HashSet;
-use thaw_utils::{class_list, mount_style, Model};
+use thaw_utils::{class_list, Model};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Tree(
@@ -19,6 +21,7 @@ pub fn Tree(
     size: Signal<TreeSize>,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("tree", include_str!("./tree.css"));
 
     if let Some(subtree_injection) = SubtreeInjection::use_context() {

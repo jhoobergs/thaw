@@ -9,7 +9,9 @@ use leptos::prelude::*;
 use num_traits::Bounded;
 use std::ops::{Add, Sub};
 use std::str::FromStr;
-use thaw_utils::{class_list, mount_style, with, BoxOneCallback, Model, OptionalProp};
+use thaw_utils::{class_list, with, BoxOneCallback, Model, OptionalProp};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 /// SpinButton are used to allow numerical input bounded between minimum and maximum values
 /// with buttons to increment and decrement the input value.
@@ -64,6 +66,7 @@ where
     T: Add<Output = T> + Sub<Output = T> + PartialOrd + Bounded,
     T: Default + Clone + FromStr + ToString + 'static,
 {
+    #[cfg(feature = "runtime-css")]
     mount_style("spin-button", include_str!("./spin-button.css"));
     let (id, name) = FieldInjection::use_id_and_name(id, name);
     let validate = Rule::validate(rules, value, name);

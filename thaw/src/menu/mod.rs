@@ -13,7 +13,9 @@ use leptos::{
 };
 use std::time::Duration;
 use thaw_components::{Follower, FollowerPlacement};
-use thaw_utils::{class_list, mount_style, on_click_outside, ArcOneCallback, BoxOneCallback};
+use thaw_utils::{class_list, on_click_outside, ArcOneCallback, BoxOneCallback};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[slot]
 pub struct MenuTrigger<T> {
@@ -40,6 +42,7 @@ pub fn Menu<T, V: 'static>(
 where
     T: AddAnyAttr + IntoView + Send + 'static,
 {
+    #[cfg(feature = "runtime-css")]
     mount_style("menu", include_str!("./menu.css"));
 
     let menu_ref = NodeRef::<Div>::new();

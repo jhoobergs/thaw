@@ -1,5 +1,7 @@
 use leptos::prelude::*;
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[derive(Default, Clone)]
 pub enum SpinnerSize {
@@ -40,6 +42,7 @@ pub fn Spinner(
     size: Signal<SpinnerSize>,
     #[prop(optional)] children: Option<Children>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("spinner", include_str!("./spinner.css"));
     let id = StoredValue::new(uuid::Uuid::new_v4().to_string());
 

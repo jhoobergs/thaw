@@ -3,7 +3,9 @@ mod anchor_link;
 pub use anchor_link::AnchorLink;
 
 use leptos::{context::Provider, html, prelude::*};
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 use web_sys::{DomRect, Element};
 
 #[component]
@@ -16,6 +18,7 @@ pub fn Anchor(
     offset_target: Option<OffsetTarget>,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("anchor", include_str!("./anchor.css"));
     let anchor_ref = NodeRef::new();
     let bar_ref = NodeRef::new();

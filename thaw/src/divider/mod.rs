@@ -1,6 +1,8 @@
 use leptos::prelude::*;
 use thaw_components::OptionComp;
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Divider(
@@ -10,6 +12,7 @@ pub fn Divider(
     vertical: Signal<bool>,
     #[prop(optional)] children: Option<Children>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("divider", include_str!("./divider.css"));
 
     view! {

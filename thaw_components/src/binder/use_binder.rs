@@ -4,7 +4,9 @@ use super::{
 };
 use leptos::{ev, html, leptos_dom::helpers::WindowListenerHandle, logging, prelude::*};
 use std::sync::Arc;
-use thaw_utils::{add_event_listener, get_scroll_parent_node, mount_style, EventListenerHandle};
+use thaw_utils::{add_event_listener, get_scroll_parent_node, EventListenerHandle};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 use web_sys::{wasm_bindgen::UnwrapThrowExt, DomRect, Element};
 
 pub fn use_binder(
@@ -13,6 +15,7 @@ pub fn use_binder(
     auto_height: bool,
     arrow: Option<FollowerArrow>,
 ) -> UseBinder {
+    #[cfg(feature = "runtime-css")]
     mount_style("binder", include_str!("./binder.css"));
 
     let scrollable_element_handle_vec = StoredValue::<Vec<EventListenerHandle>>::new(vec![]);

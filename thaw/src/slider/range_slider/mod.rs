@@ -1,7 +1,9 @@
 use super::super::SliderInjection;
 use leptos::{context::Provider, ev, html, prelude::*};
 use thaw_components::OptionComp;
-use thaw_utils::{class_list, mount_style, Model};
+use thaw_utils::{class_list, Model};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn RangeSlider(
@@ -30,6 +32,7 @@ pub fn RangeSlider(
     vertical: Signal<bool>,
     #[prop(optional)] children: Option<Children>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("range-slider", include_str!("./range-slider.css"));
 
     let rail_ref = NodeRef::<html::Div>::new();

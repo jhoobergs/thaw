@@ -1,5 +1,7 @@
 use leptos::{either::EitherOf3, prelude::*};
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Code(
@@ -7,6 +9,7 @@ pub fn Code(
     #[prop(optional, into)] text: Option<String>,
     #[prop(optional, into)] inner_html: Option<String>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("code", include_str!("./code.css"));
     view! {
         <code class=class_list![

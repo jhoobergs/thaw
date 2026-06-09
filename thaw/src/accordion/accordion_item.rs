@@ -1,7 +1,9 @@
 use crate::AccordionInjection;
 use leptos::prelude::*;
 use leptos_transition_group::CSSTransition;
-use thaw_utils::{class_list, mount_style, update, with};
+use thaw_utils::{class_list, update, with};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn AccordionItem(
@@ -12,6 +14,7 @@ pub fn AccordionItem(
     accordion_header: AccordionHeader,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("accordion-item", include_str!("./accordion-item.css"));
     let AccordionInjection {
         open_items,

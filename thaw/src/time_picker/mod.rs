@@ -11,9 +11,11 @@ use chrono::{Local, NaiveTime, Timelike};
 use leptos::{html, prelude::*};
 use thaw_components::{Follower, FollowerPlacement};
 use thaw_utils::{
-    class_list, mount_style, ArcOneCallback, ComponentRef, OptionModel, OptionModelWithValue,
+    class_list, ArcOneCallback, ComponentRef, OptionModel, OptionModelWithValue,
     SignalWatch,
 };
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn TimePicker(
@@ -36,6 +38,7 @@ pub fn TimePicker(
     #[prop(optional, into)]
     size: Signal<TimePickerSize>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("time-picker", include_str!("./time-picker.css"));
     let (id, name) = FieldInjection::use_id_and_name(id, name);
     let validate = Rule::validate(rules, value, name);

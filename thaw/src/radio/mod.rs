@@ -4,7 +4,9 @@ pub use radio_group::{RadioGroup, RadioGroupRule, RadioGroupRuleTrigger};
 
 use leptos::prelude::*;
 use radio_group::RadioGroupInjection;
-use thaw_utils::{class_list, mount_style, OptionModelWithValue};
+use thaw_utils::{class_list, OptionModelWithValue};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Radio(
@@ -16,6 +18,7 @@ pub fn Radio(
     #[prop(optional, into)]
     label: MaybeProp<String>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("radio", include_str!("./radio.css"));
 
     let id = uuid::Uuid::new_v4().to_string();

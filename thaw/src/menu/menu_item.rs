@@ -1,7 +1,9 @@
 use crate::{Icon, MenuInjection};
 use leptos::prelude::*;
 use thaw_components::{Fallback, If, OptionComp, Then};
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn MenuItem<V: Clone + Send + Sync + 'static>(
@@ -16,6 +18,7 @@ pub fn MenuItem<V: Clone + Send + Sync + 'static>(
     disabled: Signal<bool>,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("menu-item", include_str!("./menu-item.css"));
 
     let MenuInjection {

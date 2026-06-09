@@ -2,7 +2,9 @@ use crate::{Button, ButtonGroup, LocaleConfig};
 use chrono::{Datelike, Days, Local, Months, NaiveDate};
 use leptos::{prelude::*, tachys::view::any_view::AnyView};
 use std::{ops::Deref, sync::Arc};
-use thaw_utils::{class_list, mount_style, OptionModel, OptionModelWithValue};
+use thaw_utils::{class_list, OptionModel, OptionModelWithValue};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Calendar(
@@ -12,6 +14,7 @@ pub fn Calendar(
     value: OptionModel<NaiveDate>,
     #[prop(optional, into)] children: Option<CalendarChildrenFn>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("calendar", include_str!("./calendar.css"));
 
     let locale = LocaleConfig::use_locale();

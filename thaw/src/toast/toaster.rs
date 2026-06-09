@@ -5,7 +5,9 @@ use leptos_transition_group::CSSTransition;
 use send_wrapper::SendWrapper;
 use std::{collections::HashMap, time::Duration};
 use thaw_components::Teleport;
-use thaw_utils::{mount_style, ArcTwoCallback};
+use thaw_utils::{ArcTwoCallback};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 use wasm_bindgen::UnwrapThrowExt;
 
 #[component]
@@ -15,6 +17,7 @@ pub fn Toaster(
     #[prop(optional)] intent: ToastIntent,
     #[prop(default = Duration::from_secs(3))] timeout: Duration,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("toaster", include_str!("./toaster.css"));
     let config_provider = ConfigInjection::expect_context();
     let top_id_list = RwSignal::<Vec<uuid::Uuid>>::new(Default::default());

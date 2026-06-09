@@ -1,7 +1,9 @@
 use crate::Label;
 use leptos::{context::Provider, either::EitherOf3, prelude::*};
 use thaw_components::OptionComp;
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 use uuid::Uuid;
 
 #[component]
@@ -22,6 +24,7 @@ pub fn Field(
     required: Signal<bool>,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("field", include_str!("./field.css"));
     let id = StoredValue::new(Uuid::new_v4().to_string());
     let validation_state = RwSignal::new(None::<FieldValidationState>);

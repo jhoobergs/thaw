@@ -1,5 +1,7 @@
 use leptos::prelude::*;
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Image(
@@ -29,6 +31,7 @@ pub fn Image(
     #[prop(optional, into)]
     fit: Signal<ImageFit>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("image", include_str!("./image.css"));
 
     view! {

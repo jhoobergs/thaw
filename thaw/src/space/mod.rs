@@ -1,5 +1,7 @@
 use leptos::prelude::*;
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[derive(Default)]
 pub enum SpaceGap {
@@ -29,6 +31,7 @@ pub fn Space(
     justify: MaybeProp<SpaceJustify>,
     children: ChildrenFragment,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("space", include_str!("./space.css"));
     let gap = match gap {
         SpaceGap::Small => "4px 8px".into(),

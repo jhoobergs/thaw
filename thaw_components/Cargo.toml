@@ -21,6 +21,8 @@ uuid = { version = "1.10.0", features = ["v4", "js"] }
 send_wrapper = "0.6"
 
 [features]
+build-css = []
+runtime-css = []
 csr = ["leptos/csr"]
 ssr = ["leptos/ssr"]
 hydrate = ["leptos/hydrate"]

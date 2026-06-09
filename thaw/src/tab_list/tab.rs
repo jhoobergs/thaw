@@ -1,7 +1,9 @@
 use super::{TabListInjection, TabRegisterData};
 use leptos::{html, prelude::*};
 use std::ops::Deref;
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Tab(
@@ -11,6 +13,7 @@ pub fn Tab(
     value: String,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("tab", include_str!("./tab.css"));
 
     let tab_ref = NodeRef::<html::Button>::new();

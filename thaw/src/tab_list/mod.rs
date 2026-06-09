@@ -4,7 +4,9 @@ pub use tab::*;
 
 use leptos::{context::Provider, html, prelude::*};
 use std::collections::HashMap;
-use thaw_utils::{class_list, mount_style, Model};
+use thaw_utils::{class_list, Model};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn TabList(
@@ -14,6 +16,7 @@ pub fn TabList(
     selected_value: Model<String>,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("tab-list", include_str!("./tab-list.css"));
 
     let registered_tabs = RwSignal::new(HashMap::new());

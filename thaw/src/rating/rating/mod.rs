@@ -5,7 +5,9 @@ pub use types::*;
 use super::rating_item::RatingItem;
 use crate::{FieldInjection, Rule};
 use leptos::{context::Provider, prelude::*};
-use thaw_utils::{class_list, mount_style, OptionModel};
+use thaw_utils::{class_list, OptionModel};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 use wasm_bindgen::JsCast;
 use web_sys::{Event, EventTarget, HtmlInputElement, MouseEvent};
 
@@ -34,6 +36,7 @@ pub fn Rating(
     #[prop(optional, into)]
     color: Signal<RatingColor>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("rating", include_str!("./rating.css"));
     let (id, name) = FieldInjection::use_id_and_name(id, name);
     let validate = Rule::validate(rules, value, name);

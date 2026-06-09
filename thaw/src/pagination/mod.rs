@@ -1,7 +1,9 @@
 use crate::{Button, ButtonAppearance};
 use leptos::{either::Either, prelude::*};
 use std::cmp::min;
-use thaw_utils::{class_list, mount_style, Model};
+use thaw_utils::{class_list, Model};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Pagination(
@@ -16,6 +18,7 @@ pub fn Pagination(
     #[prop(default = 1.into(), into)]
     sibling_count: Signal<usize>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("pagination", include_str!("./pagination.css"));
 
     let no_next = Memo::new(move |_| page.get() == page_count.get());

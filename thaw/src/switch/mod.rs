@@ -1,7 +1,9 @@
 use crate::{FieldInjection, FieldValidationState, Rule};
 use leptos::{html, prelude::*};
 use std::ops::Deref;
-use thaw_utils::{class_list, mount_style, Model};
+use thaw_utils::{class_list, Model};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Switch(
@@ -27,6 +29,7 @@ pub fn Switch(
     #[prop(optional, into)]
     label: MaybeProp<String>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("switch", include_str!("./switch.css"));
     let (id, name) = FieldInjection::use_id_and_name(id, name);
     let validate = Rule::validate(rules, checked, name);

@@ -1,5 +1,7 @@
 use leptos::{either::EitherOf3, prelude::*};
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Link(
@@ -17,6 +19,7 @@ pub fn Link(
     disabled_focusable: Signal<bool>,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("link", include_str!("./link.css"));
 
     let link_disabled = Memo::new(move |_| disabled.get() || disabled_focusable.get());

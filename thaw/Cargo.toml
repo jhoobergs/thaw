@@ -16,6 +16,7 @@ rust-version.workspace = true
 
 [dependencies]
 leptos = { workspace = true }
+thaw_css = { workspace = true, optional = true }
 thaw_components = { workspace = true }
 thaw_macro = { workspace = true }
 thaw_utils = { workspace = true }
@@ -44,6 +45,9 @@ getset = "0.1.5"
 pure-rust-locales = "0.8.1"
 
 [features]
+default = ["build-css"]
+build-css = ["thaw_utils/build-css", "thaw_components/build-css", "dep:thaw_css"]
+runtime-css = ["thaw_utils/runtime-css", "thaw_components/runtime-css"]
 csr = ["leptos/csr", "thaw_components/csr", "thaw_utils/csr"]
 ssr = ["leptos/ssr", "thaw_components/ssr", "thaw_utils/ssr"]
 hydrate = ["leptos/hydrate", "thaw_components/hydrate", "thaw_utils/hydrate"]

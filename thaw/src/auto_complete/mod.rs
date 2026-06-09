@@ -12,7 +12,9 @@ use crate::{
 use leptos::{context::Provider, either::Either, html, prelude::*};
 use std::collections::HashMap;
 use thaw_components::{Follower, FollowerPlacement, FollowerWidth};
-use thaw_utils::{class_list, mount_style, ArcOneCallback, BoxOneCallback, Model};
+use thaw_utils::{class_list, ArcOneCallback, BoxOneCallback, Model};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn AutoComplete(
@@ -41,6 +43,7 @@ pub fn AutoComplete(
     #[prop(optional)] comp_ref: ComponentRef<AutoCompleteRef>,
     #[prop(optional)] children: Option<Children>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("auto-complete", include_str!("./auto-complete.css"));
     let input_ref = ComponentRef::<InputRef>::new();
     let listbox_ref = NodeRef::<html::Div>::new();

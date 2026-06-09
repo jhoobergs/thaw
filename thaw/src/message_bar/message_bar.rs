@@ -1,5 +1,7 @@
 use leptos::{context::Provider, either::EitherOf4, prelude::*};
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 /// Communicates important information about the state of the entire application or surface.
 /// For example, the status of a page, panel, dialog or card.
@@ -14,6 +16,7 @@ pub fn MessageBar(
     intent: Signal<MessageBarIntent>,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("message-bar", include_str!("./message-bar.css"));
 
     view! {

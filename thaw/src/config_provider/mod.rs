@@ -1,6 +1,8 @@
 use crate::{LocaleConfig, Theme};
 use leptos::{context::Provider, prelude::*};
-use thaw_utils::{class_list, mount_dynamic_style, mount_style};
+use thaw_utils::{class_list, mount_dynamic_style};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn ConfigProvider(
@@ -19,6 +21,7 @@ pub fn ConfigProvider(
     locale: Option<RwSignal<LocaleConfig>>,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("config-provider", include_str!("./config-provider.css"));
 
     let theme = theme.unwrap_or_else(|| RwSignal::new(Theme::light()));

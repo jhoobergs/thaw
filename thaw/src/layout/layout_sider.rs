@@ -1,6 +1,8 @@
 use crate::Scrollbar;
 use leptos::prelude::*;
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn LayoutSider(
@@ -13,6 +15,7 @@ pub fn LayoutSider(
     content_style: MaybeProp<String>,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("layout-sider", include_str!("./layout-sider.css"));
     view! {
         <div class=class_list!["thaw-layout-sider", class]>

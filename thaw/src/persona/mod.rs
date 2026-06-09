@@ -5,7 +5,9 @@ pub use types::*;
 use crate::Avatar;
 use leptos::{either::Either, prelude::*};
 use thaw_components::{If, Then};
-use thaw_utils::{class_list, mount_style};
+use thaw_utils::{class_list};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Persona(
@@ -38,6 +40,7 @@ pub fn Persona(
     #[prop(optional)]
     persona_quaternary_text: Option<PersonaQuaternaryText>,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("persona", include_str!("./persona.css"));
 
     let text_position_before =

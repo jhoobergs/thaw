@@ -1,6 +1,8 @@
 use super::TagSize;
 use leptos::{context::Provider, prelude::*};
-use thaw_utils::{class_list, mount_style, ArcOneCallback};
+use thaw_utils::{class_list, ArcOneCallback};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn TagGroup(
@@ -19,6 +21,7 @@ pub fn TagGroup(
     dismissible: Signal<bool>,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("tag-group", include_str!("./tag-group.css"));
 
     view! {

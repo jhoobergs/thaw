@@ -6,7 +6,9 @@ pub use tag_group::*;
 
 use crate::DismissRegularIcon;
 use leptos::{either::Either, ev, prelude::*};
-use thaw_utils::{class_list, mount_style, ArcOneCallback};
+use thaw_utils::{class_list, ArcOneCallback};
+#[cfg(feature = "runtime-css")]
+use thaw_utils::mount_style;
 
 #[component]
 pub fn Tag(
@@ -28,6 +30,7 @@ pub fn Tag(
     value: Option<String>,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("tag", include_str!("./tag.css"));
     let (group_disabled, group_size, group_on_dismiss, group_dismissible) =
         TagGroupInjection::use_context()

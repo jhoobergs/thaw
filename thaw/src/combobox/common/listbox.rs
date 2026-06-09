@@ -2,6 +2,7 @@ use super::utils::{get_dropdown_action_from_key, DropdownAction};
 use crate::_aria::ActiveDescendantController;
 use leptos::{context::Provider, ev, html, prelude::*};
 use std::sync::Arc;
+#[cfg(feature = "runtime-css")]
 use thaw_utils::mount_style;
 use web_sys::{HtmlElement, Node};
 
@@ -12,6 +13,7 @@ pub fn Listbox(
     listbox_ref: NodeRef<html::Div>,
     children: Children,
 ) -> impl IntoView {
+    #[cfg(feature = "runtime-css")]
     mount_style("listbox", include_str!("./listbox.css"));
 
     let trigger = ArcTrigger::new();
