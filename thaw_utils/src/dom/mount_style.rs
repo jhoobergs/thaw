@@ -8,11 +8,14 @@ pub fn mount_style(id: &str, content: &'static str) {
             if #[cfg(feature = "ssr")] {
                 use leptos::view;
                 use leptos_meta::Style;
-                use super::SSRMountStyleContext;
 
-                if let Some(context) = SSRMountStyleContext::use_context() {
-                    context.push_style(id, content.to_string());
-                    return;
+                #[cfg(feature = "runtime-css")]
+                {
+                    use super::SSRMountStyleContext;
+                    if let Some(context) = SSRMountStyleContext::use_context() {
+                        context.push_style(id, content.to_string());
+                        return;
+                    }
                 }
 
                 let _ = view! {
@@ -61,11 +64,14 @@ pub fn mount_dynamic_style<T: Fn() -> String + Send + Sync + 'static>(id: String
         if #[cfg(feature = "ssr")] {
             use leptos::{view, prelude::untrack};
             use leptos_meta::Style;
-            use super::SSRMountStyleContext;
 
-            if let Some(context) = SSRMountStyleContext::use_context() {
-                context.push_style(id, untrack(f));
-                return;
+            #[cfg(feature = "runtime-css")]
+            {
+                use super::SSRMountStyleContext;
+                if let Some(context) = SSRMountStyleContext::use_context() {
+                    context.push_style(id, untrack(f));
+                    return;
+                }
             }
 
             let _ = view! {
