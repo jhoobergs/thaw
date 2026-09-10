@@ -1,8 +1,8 @@
 use crate::{LocaleConfig, Theme};
 use leptos::{context::Provider, prelude::*};
-use thaw_utils::{class_list, mount_dynamic_style};
+use thaw_utils::class_list;
 #[cfg(feature = "runtime-css")]
-use thaw_utils::mount_style;
+use thaw_utils::{mount_dynamic_style, mount_style};
 
 #[component]
 pub fn ConfigProvider(
@@ -25,10 +25,14 @@ pub fn ConfigProvider(
     mount_style("config-provider", include_str!("./config-provider.css"));
 
     let theme = theme.unwrap_or_else(|| RwSignal::new(Theme::light()));
+    #[cfg(feature = "runtime-css")]
     let theme_id = theme_id.unwrap_or_else(|| uuid::Uuid::new_v4().to_string());
+    #[cfg(not(feature = "runtime-css"))]
+    let theme_id = theme_id.unwrap_or_else(|| "thaw-default".to_string());
     let id = StoredValue::new(theme_id);
     let locale = locale.unwrap_or_else(|| RwSignal::new(LocaleConfig::default()));
 
+    #[cfg(feature = "runtime-css")]
     mount_dynamic_style(id.get_value(), move || {
         let mut css_vars = String::new();
         theme.with(|theme| {

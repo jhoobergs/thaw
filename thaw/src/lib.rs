@@ -127,6 +127,7 @@ pub use tree::*;
 pub use upload::*;
 
 pub mod ssr {
+    #[cfg(feature = "runtime-css")]
     pub use thaw_utils::SSRMountStyleProvider;
 }
 

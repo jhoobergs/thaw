@@ -134,14 +134,13 @@ impl RenderHtml for SSRMountStyle {
         self.children
             .to_html_with_buf(buf, position, escape, mark_branches, extra_attrs);
 
-        let head_loc = buf
-            .find("<head>")
-            .expect("you are using SSRMountStyleProvider without a <head> tag");
-        let marker_loc = buf
-            .find(r#"<meta name="thaw-ui-style""#)
-            .unwrap_or(head_loc + 6);
-
-        buf.insert_str(marker_loc, &self.context.to_html());
+        #[cfg(feature = "runtime-css")]
+        if let Some(head_loc) = buf.find("<head>") {
+            let marker_loc = buf
+                .find(r#"<meta name="thaw-ui-style""#)
+                .unwrap_or(head_loc + 6);
+            buf.insert_str(marker_loc, &self.context.to_html());
+        }
     }
 
     fn to_html_async_with_buf<const OUT_OF_ORDER: bool>(
@@ -162,14 +161,14 @@ impl RenderHtml for SSRMountStyle {
             extra_attrs,
         );
 
+        #[cfg(feature = "runtime-css")]
         buf.with_buf(|buf| {
-            let head_loc = buf
-                .find("<head>")
-                .expect("you are using SSRMountStyleProvider without a <head> tag");
-            let marker_loc = buf
-                .find(r#"<meta name="thaw-ui-style""#)
-                .unwrap_or(head_loc + 6);
-            buf.insert_str(marker_loc, &self.context.to_html());
+            if let Some(head_loc) = buf.find("<head>") {
+                let marker_loc = buf
+                    .find(r#"<meta name="thaw-ui-style""#)
+                    .unwrap_or(head_loc + 6);
+                buf.insert_str(marker_loc, &self.context.to_html());
+            }
         });
     }
 
