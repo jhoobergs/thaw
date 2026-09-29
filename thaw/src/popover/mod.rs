@@ -34,6 +34,8 @@ pub fn Popover<T>(
     #[prop(optional, into)] size: Signal<PopoverSize>,
     #[prop(optional, into)] on_open: Option<BoxCallback>,
     #[prop(optional, into)] on_close: Option<BoxCallback>,
+    /// Optional external signal to control the open state. When provided, setting it to `false` closes the popover.
+    #[prop(optional)] open: Option<RwSignal<bool>>,
     children: Children,
 ) -> impl IntoView
 where
@@ -43,7 +45,7 @@ where
     mount_style("popover", include_str!("./popover.css"));
 
     let popover_ref = NodeRef::<html::Div>::new();
-    let is_show_popover = RwSignal::new(false);
+    let is_show_popover = open.unwrap_or_else(|| RwSignal::new(false));
     let show_popover_handle = StoredValue::new(None::<TimeoutHandle>);
 
     if on_open.is_some() || on_close.is_some() {
