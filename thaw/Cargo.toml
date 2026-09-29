@@ -30,6 +30,7 @@ web-sys = { version = "0.3.72", features = [
     "ScrollBehavior",
     "TreeWalker",
     "NodeFilter",
+    "Node",
 ] }
 wasm-bindgen = { workspace = true }
 icondata_core = "0.1.0"

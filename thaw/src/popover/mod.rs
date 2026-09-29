@@ -118,6 +118,9 @@ where
                     let Some(trigger_el) = trigger_ref.get_untracked() else {
                         return None;
                     };
+                    if !trigger_el.is_connected() {
+                        return None;
+                    }
                     let Some(popover_el) = popover_ref.get_untracked() else {
                         return None;
                     };
