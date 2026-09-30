@@ -100,19 +100,15 @@ where
     let PopoverTrigger {
         children: trigger_children,
     } = popover_trigger;
-    let trigger_children = trigger_children.into_inner()()
-        .into_inner()
-        .add_any_attr(tachys_class(("thaw-popover-trigger", true)))
-        .add_any_attr(tachys_class(("thaw-popover-trigger--open", move || {
-            is_show_popover.get()
-        })));
+    let raw_trigger = trigger_children.into_inner()().into_inner();
 
     let trigger_children = match trigger_type {
         PopoverTriggerType::Click => {
             let trigger_ref = NodeRef::<thaw_utils::Element>::new();
             on_click_outside(
                 move || {
-                    if !is_show_popover.get_untracked() {
+                    let show = is_show_popover.get_untracked();
+                    if !show {
                         return None;
                     }
                     let Some(trigger_el) = trigger_ref.get_untracked() else {
@@ -126,20 +122,40 @@ where
                     };
                     Some(vec![popover_el.into(), trigger_el])
                 },
-                move || is_show_popover.set(false),
+                move || {
+                    is_show_popover.set(false);
+                },
             );
+            // Wrap the trigger in a stable <span> so the click handler lives on a
+            // stable DOM element and is not affected by ReactiveFunction::rebuild
+            // replacing the inner trigger element on resource refetches.
+            let inner = raw_trigger
+                .add_any_attr(tachys_class(("thaw-popover-trigger", true)))
+                .add_any_attr(tachys_class(("thaw-popover-trigger--open", move || {
+                    is_show_popover.get()
+                })));
             Either::Left(
-                trigger_children
-                    .add_any_attr(node_ref(trigger_ref))
-                    .add_any_attr(on(ev::click, move |_| {
-                        is_show_popover.update(|show| {
-                            *show = !*show;
-                        });
-                    })),
+                view! {
+                    <span
+                        style="display:contents"
+                        on:click=move |_| {
+                            is_show_popover.update(|show| {
+                                *show = !*show;
+                            });
+                        }
+                    >
+                        {inner}
+                    </span>
+                }
+                .add_any_attr(node_ref(trigger_ref)),
             )
         }
         PopoverTriggerType::Hover => Either::Right(
-            trigger_children
+            raw_trigger
+                .add_any_attr(tachys_class(("thaw-popover-trigger", true)))
+                .add_any_attr(tachys_class(("thaw-popover-trigger--open", move || {
+                    is_show_popover.get()
+                })))
                 .add_any_attr(on(ev::mouseenter, on_mouse_enter))
                 .add_any_attr(on(ev::mouseleave, on_mouse_leave)),
         ),
